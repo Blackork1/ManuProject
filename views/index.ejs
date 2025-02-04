@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservation Form</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Weekend Reservation Form</h1>
+    <form action="/reserve" method="POST">
+      <label for="date">Choose a date:</label>
+      <div class="date-selection">
+        <% availableDays.forEach(day => { %>
+        <div class="date-option">
+          <input
+            type="radio"
+            id="<%= day.date %>"
+            name="selectedDate"
+            value="<%= day.date %>"
+            required
+          />
+          <label for="<%= day.date %>"><%= day.dayName %></label>
+        </div>
+        <% }); %>
+      </div>
+
+      <label for="time">Choose a time slot:</label>
+      <div class="time-selection">
+        <input
+          type="radio"
+          id="13-15"
+          name="selectedTime"
+          value="13-15"
+          required
+        />
+        <label for="13-15">13:00 - 15:00</label>
+        <input
+          type="radio"
+          id="15-17"
+          name="selectedTime"
+          value="15-17"
+          required
+        />
+        <label for="15-17">15:00 - 17:00</label>
+      </div>
+
+      <label>Choose a table:</label>
+      <div>
+        <% tables.forEach(table => { %>
+        <label for="<%= table.id %>"
+          ><%= table.tablename %> - <%= table.places %> Plätze (Raum: <%=
+          table.roomname %>)</label
+        >
+        <input
+          type="radio"
+          id="<%= table.id %>"
+          value="<%= table.id %>"
+          name="tableId"
+          required
+        />
+        <% }); %>
+      </div>
+
+      <label for="numPeople">Anzahl von Gästen:</label>
+      <select name="numPeople" id="numPeople" required>
+        <% for (let i = 1; i <= 6; i++) { %>
+        <option value="<%= i %>"><%= i %></option>
+        <% } %>
+      </select>
+
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <%- include('partials/footer') %>
+  </body>
+</html>
